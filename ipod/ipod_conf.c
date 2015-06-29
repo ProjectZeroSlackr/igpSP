@@ -120,6 +120,7 @@ static int defaults[] = {
 #endif
 
 static const char *igpsp_conf_filenames[] = {
+	"/opt/Emulators/igpSP/Conf/igpSP.ini",
 	"igpSP.ini",
 	"Conf/igpSP.ini",
 	"/igpSP.ini",

@@ -661,7 +661,11 @@ s32 load_game_config_file()
   u8 game_config_filename[512];
   u32 file_loaded = 0;
   u32 i;
+#ifdef ZEROSLACKR
+  change_ext(gamepak_filename, game_config_filename, ROOT "/Conf/", ".cfg");
+#else
   change_ext(gamepak_filename, game_config_filename, ".cfg");
+#endif
 
   file_open(game_config_file, game_config_filename, read);
 
@@ -725,7 +729,11 @@ s32 load_config_file()
   u8 config_path[512];
 
   #if (defined(PSP_BUILD) || defined(ARM_ARCH)) && !defined(_WIN32_WCE)
+  #ifdef ZEROSLACKR
+    sprintf(config_path, "%s%s", ROOT "/Conf/", GPSP_CONFIG_FILENAME);
+  #else
     sprintf(config_path, "%s/%s", main_path, GPSP_CONFIG_FILENAME);
+  #endif
   #else
     sprintf(config_path, "%s\\%s", main_path, GPSP_CONFIG_FILENAME);
   #endif
@@ -800,7 +808,11 @@ s32 save_game_config_file()
   u8 game_config_filename[512];
   u32 i;
 
+#ifdef ZEROSLACKR
+  change_ext(gamepak_filename, game_config_filename, ROOT "/Conf/", ".cfg");
+#else
   change_ext(gamepak_filename, game_config_filename, ".cfg");
+#endif
 
   file_open(game_config_file, game_config_filename, write);
 
@@ -833,7 +845,11 @@ s32 save_config_file()
   u8 config_path[512];
 
   #if (defined(PSP_BUILD) || defined(ARM_ARCH)) && !defined(_WIN32_WCE)
+  #ifdef ZEROSLACKR
+    sprintf(config_path, "%s%s", ROOT "/Conf/", GPSP_CONFIG_FILENAME);
+  #else
     sprintf(config_path, "%s/%s", main_path, GPSP_CONFIG_FILENAME);
+  #endif
   #else
     sprintf(config_path, "%s\\%s", main_path, GPSP_CONFIG_FILENAME);
   #endif
@@ -936,7 +952,11 @@ void get_savestate_filename(u32 slot, u8 *name_buffer)
   u8 savestate_ext[16];
 
   sprintf(savestate_ext, "%d.svs", slot);
+#ifdef ZEROSLACKR
+  change_ext(gamepak_filename, name_buffer, ROOT "/Saves/", savestate_ext);
+#else
   change_ext(gamepak_filename, name_buffer, savestate_ext);
+#endif
 
   get_savestate_snapshot(name_buffer);
 }
@@ -946,7 +966,11 @@ void get_savestate_filename_noshot(u32 slot, u8 *name_buffer)
   u8 savestate_ext[16];
 
   sprintf(savestate_ext, "%d.svs", slot);
+#ifdef ZEROSLACKR
+  change_ext(gamepak_filename, name_buffer, ROOT "/Saves/", savestate_ext);
+#else
   change_ext(gamepak_filename, name_buffer, savestate_ext);
+#endif
 }
 
 #ifdef PSP_BUILD

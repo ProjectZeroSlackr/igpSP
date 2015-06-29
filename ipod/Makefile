@@ -36,6 +36,9 @@ endif
 ifdef BENCHMARK
 CFLAGS     += -DBENCHMARK
 endif
+ifdef ZEROSLACKR
+CFLAGS     += -DZEROSLACKR
+endif
 CFLAGS     += -O3 -msoft-float -funsigned-char -fno-common                    \
               -fno-builtin -fomit-frame-pointer                               \
 			  -mapcs -march=armv4t -mcpu=arm7tdmi -elf2flt                    \

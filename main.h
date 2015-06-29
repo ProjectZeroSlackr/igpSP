@@ -240,7 +240,11 @@ u32 file_length(u8 *dummy, FILE *fp);
 
 #endif
 
+#ifdef ZEROSLACKR
+void change_ext(u8 *src, u8 *buffer, u8 *prefix, u8 *extension);
+#else
 void change_ext(u8 *src, u8 *buffer, u8 *extension);
+#endif
 
 #endif
 

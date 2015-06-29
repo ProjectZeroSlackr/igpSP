@@ -106,6 +106,9 @@
 #ifndef IPOD_BUILD
   #include "SDL.h"
 #endif
+#ifdef ZEROSLACKR
+  #define ROOT "/opt/Emulators/igpSP"
+#endif
 
 #ifdef ARM_ARCH
   #define function_cc

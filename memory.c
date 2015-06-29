@@ -2097,7 +2097,11 @@ s32 load_game_config(u8 *gamepak_title, u8 *gamepak_code, u8 *gamepak_maker)
   flash_device_id = FLASH_DEVICE_MACRONIX_64KB;
 
 #if (defined(PSP_BUILD) || defined(ARM_ARCH)) && !defined(_WIN32_WCE)
+#ifdef ZEROSLACKR
+  sprintf(config_path, "%s%s", ROOT "/Data/", CONFIG_FILENAME);
+#else
   sprintf(config_path, "%s/%s", main_path, CONFIG_FILENAME);
+#endif
 #else
   sprintf(config_path, "%s\\%s", main_path, CONFIG_FILENAME);
 #endif
@@ -2258,7 +2262,11 @@ u32 load_gamepak(char *name)
 
     strcpy(backup_filename, name);
     strncpy(gamepak_filename, name, 512);
+#ifdef ZEROSLACKR
+    change_ext(gamepak_filename, backup_filename, ROOT "/Saves/", ".sav");
+#else
     change_ext(gamepak_filename, backup_filename, ".sav");
+#endif
 
     load_backup(backup_filename);
 
@@ -2272,7 +2280,11 @@ u32 load_gamepak(char *name)
     load_game_config(gamepak_title, gamepak_code, gamepak_maker);
     load_game_config_file();
 
+#ifdef ZEROSLACKR
+    change_ext(gamepak_filename, cheats_filename, ROOT "/Cheats/", ".cht");
+#else
     change_ext(gamepak_filename, cheats_filename, ".cht");
+#endif
     add_cheats(cheats_filename);
 
     return 0;

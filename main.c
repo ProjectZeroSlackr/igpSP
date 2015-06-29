@@ -184,6 +184,9 @@ u8 *file_ext[] = { ".gba", ".bin", ".zip", NULL };
 #ifdef ARM_ARCH
 void ChangeWorkingDirectory(char *exe)
 {
+#ifdef ZEROSLACKR
+  chdir(ROOT "/Roms");
+#else
 #ifndef _WIN32_WCE
   char *s = strrchr(exe, '/');
   if (s != NULL) {
@@ -191,6 +194,7 @@ void ChangeWorkingDirectory(char *exe)
     chdir(exe);
     *s = '/';
   }
+#endif
 #endif
 }
 #endif
@@ -292,7 +296,11 @@ int main(int argc, char *argv[])
   sprintf(bios_filename, "%s/%s", main_path, "gba_bios.bin");
   if(load_bios(bios_filename) == -1)
 #else
+#ifdef ZEROSLACKR
+  if(load_bios(ROOT "/Data/gba_bios.bin") == -1)
+#else
   if(load_bios("gba_bios.bin") == -1)
+#endif
 #endif
   {
     gui_action_type gui_action = CURSOR_NONE;
@@ -1113,10 +1121,19 @@ void get_ticks_us(u64 *ticks_return)
 
 #endif
 
+#ifdef ZEROSLACKR
+void change_ext(u8 *src, u8 *buffer, u8 *prefix, u8 *extension)
+#else
 void change_ext(u8 *src, u8 *buffer, u8 *extension)
+#endif
 {
   u8 *dot_position;
+#ifdef ZEROSLACKR
+  strcpy(buffer, prefix);
+  strcat(buffer, src);
+#else
   strcpy(buffer, src);
+#endif
   dot_position = strrchr(buffer, '.');
 
   if(dot_position)
